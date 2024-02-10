@@ -7,9 +7,8 @@ import java.time.LocalDateTime;
 public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
-
-
     private String country;
     private String city;
     private Double temperature;
@@ -56,7 +55,7 @@ public class Weather {
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", temperature='" + temperature + '\'' +
-                ", tine='" + time + '\'' +
+                ", time='" + time + '\'' +
                 '}';
     }
 }

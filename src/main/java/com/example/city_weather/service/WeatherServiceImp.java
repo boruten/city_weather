@@ -1,9 +1,9 @@
 package com.example.city_weather.service;
-
-
 import com.example.city_weather.dao.WeatherRep;
 import com.example.city_weather.entity.Weather;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,27 +22,32 @@ public class WeatherServiceImp implements WeatherService {
     private final RestTemplate restTemplate;
     private final WeatherRep weatherRep;
 
+
+    @Autowired
     public WeatherServiceImp(WeatherRep weatherRep, RestTemplate restTemplate) {
         this.weatherRep = weatherRep;
         this.restTemplate = restTemplate;
     }
 
-    public void findAndSaveWeatherData(String city) {
+    public List<Weather> findAndSaveWeatherData(String city) {
         String apiUrl = weatherApiUrl + "?city=" + city + "&apiKey=" + weatherApiKey;
         Weather weather = restTemplate.getForObject(apiUrl, Weather.class);
-
         if (weather != null) {
             weatherRep.save(weather);
+            return List.of(weather);
         }
-    }
-
-    @Override
-    public Weather findByCityAndDate(String city, LocalDateTime data) {
-        return (Weather) weatherRep.findByCityAndDate(city, data);
+        throw new IllegalArgumentException("Weather data not found for the city and date");
     }
 
     @Override
     public List<Weather> findAll() {
         return (List<Weather>) weatherRep.findAll();
     }
+
+
+    @Override
+    public List<Weather> findByCityAndTime(String city, LocalDateTime time) {
+        return weatherRep.findByCityAndTime(city, time);
+    }
 }
+

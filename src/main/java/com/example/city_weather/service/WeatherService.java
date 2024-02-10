@@ -8,9 +8,10 @@ import java.util.List;
 public interface WeatherService {
 
 
-    public void findAndSaveWeatherData(String city);
+    public List<Weather> findAndSaveWeatherData(String city);
 
-    Weather findByCityAndDate(String city, LocalDateTime data);
+    List<Weather> findByCityAndTime(String city, LocalDateTime time);
 
     List<Weather> findAll();
 }
+
