@@ -12,5 +12,4 @@ public class CityWeatherApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CityWeatherApplication.class, args);
 	}
-
 }
